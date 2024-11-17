@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "bastion_public" {
 # EKS cluster can be accessed from bastion host
 resource "aws_security_group_rule" "cluster_bastion" {
   type              = "ingress"
-  from_port         = 443
+  from_port         = 443 #HTTPS
   to_port           = 443
   protocol          = "tcp"
   source_security_group_id = module.bastion.sg_id
@@ -102,6 +102,7 @@ resource "aws_security_group_rule" "node_cluster" {
 }
 
 # EKS nodes should accept all traffic from nodes with in VPC CIDR range.
+#this allows node to node communication
 resource "aws_security_group_rule" "node_vpc" {
   type              = "ingress"
   from_port         = 0
